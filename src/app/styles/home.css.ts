@@ -42,3 +42,9 @@ export const logo = style({
   maxWidth: "100%",
   height: "auto",
 })
+
+export const box = style({
+  padding: "5rem",
+  borderRadius: theme.borderRadius,
+  backgroundColor: theme.colors.darkGrey,
+})

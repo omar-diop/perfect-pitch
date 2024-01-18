@@ -42,7 +42,7 @@ export const theme = createGlobalTheme(":root", {
     medium: "1.75rem",
     large: "2.5rem",
   },
-  borderRadius: "4px",
+  borderRadius: "24px",
   transition: "all 0.25s cubic-bezier(0.645,0.045,0.355,1)",
   boxShadow: "rgb(0, 0, 0) 0px 15px 29px -15px",
 })

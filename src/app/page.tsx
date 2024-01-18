@@ -1,5 +1,6 @@
 import Image from "next/image"
 import * as styles from "./styles/home.css"
+import { Tuner } from "./components/Tuner"
 
 export default function Home() {
   return (
@@ -18,14 +19,9 @@ export default function Home() {
       </div>
 
       <div className={styles.container}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+        <div className={styles.box}>
+          <Tuner instrument="guitar" />
+        </div>
       </div>
       <div className={styles.footer}>
         <p>Footer</p>
