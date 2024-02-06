@@ -1,5 +1,12 @@
 const NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 
+export type Note = {
+  name: string
+  octave: number
+  centsOff: number
+  frequency: number
+}
+
 const rxx = (lag: number, N: number, samples: Float32Array) => {
   var sum = 0
   for (var n = 0; n <= N - lag - 1; n++) {
@@ -19,7 +26,7 @@ const autocorrelationWithShiftingLag = (samples: Float32Array) => {
 
   rms = Math.sqrt(rms / samples.length)
 
-  if (rms < 0.05) {
+  if (rms < 0.08) {
     return []
   }
   return autocorrelation
@@ -60,11 +67,32 @@ const getFrequency = (correlatedValues: number[], sampleRate: number) => {
 }
 
 //Math source: https://newt.phys.unsw.edu.au/jw/notes.html
-const getNoteFromPitch = (frequency: number) => {
+
+const getNoteFromFrequency = (frequency: number): Note => {
+  const midiNum = getMidiNumberFromPitch(frequency)
+  return {
+    name: NOTES[midiNum % 12],
+    octave: Math.floor(midiNum / 12 - 1),
+    centsOff: getCentsFromPitch(frequency, midiNum),
+    frequency: Math.round((frequency + Number.EPSILON) * 100) / 100,
+  }
+}
+
+const getMidiNumberFromPitch = (frequency: number) => {
   const noteNum = 12 * (Math.log(frequency / 440) / Math.log(2))
   const midiNum = Math.round(noteNum) + 69
 
-  return `${NOTES[midiNum % 12]}${Math.floor(midiNum / 12 - 1)}`
+  return midiNum
 }
 
-export { getAutocorrelatedValues, getFrequency, getNoteFromPitch }
+const getCentsFromPitch = (frequency: number, note: number) => {
+  const baseFrequency = getPitchFromNote(note)
+
+  return Math.floor((1200 * Math.log(frequency / baseFrequency)) / Math.log(2))
+}
+
+const getPitchFromNote = (note: number) => {
+  return 440 * Math.pow(2, (note - 69) / 12)
+}
+
+export { getAutocorrelatedValues, getFrequency, getNoteFromFrequency }

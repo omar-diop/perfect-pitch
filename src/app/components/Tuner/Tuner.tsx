@@ -2,13 +2,15 @@
 
 import { CallToAction } from "../CallToAction"
 import { useState, useEffect } from "react"
+import GaugeChart from "react-gauge-chart"
 import * as styles from "./tuner.css"
 
 import BrowserAudio, { FFT_SIZE } from "./libs/browserAudio"
 import {
   getAutocorrelatedValues,
   getFrequency,
-  getNoteFromPitch,
+  getNoteFromFrequency,
+  Note,
 } from "./libs/pitchDetector"
 
 type ITuner = { instrument: Instrument }
@@ -21,7 +23,8 @@ const analyser = BrowserAudio.getAnalyser()
 
 export function Tuner(props: ITuner) {
   const [source, setSource] = useState<MediaStreamAudioSourceNode>()
-  const [note, setNote] = useState("")
+  const [note, setNote] = useState<Note | undefined>()
+  const [isListening, setListening] = useState(false)
 
   const startTuner = async () => {
     const microphone = await BrowserAudio.getMicStream()
@@ -31,12 +34,14 @@ export function Tuner(props: ITuner) {
     }
 
     setSource(audioContext.createMediaStreamSource(microphone))
+    setListening(true)
   }
 
   const stopTuner = async () => {
     if (source) {
       source.disconnect(analyser)
     }
+    setListening(false)
   }
 
   const getPitch = () => {
@@ -45,8 +50,10 @@ export function Tuner(props: ITuner) {
     const frequency = getFrequency(correlatedValues, audioContext.sampleRate)
 
     if (frequency > -1) {
-      const note = getNoteFromPitch(frequency)
+      const note = getNoteFromFrequency(frequency)
       setNote(note)
+    } else {
+      //TODO unset note after 1 sec
     }
   }
 
@@ -62,23 +69,47 @@ export function Tuner(props: ITuner) {
     return () => clearInterval(audioSample)
   }, [])
 
+  const centsOffToPercentage = (cents: number | undefined) =>
+    cents ? 0.5 + cents / 100 : 0.5
+
   switch (props.instrument) {
     case "guitar":
       return (
         <div>
-          <h1>{note}</h1>
-          <CallToAction
-            type="primary_big"
-            text="Inizia"
-            onClick={startTuner}
-            mode="button"
-          />
-          <CallToAction
-            type="red_big"
-            text="Ferma"
-            onClick={stopTuner}
-            mode="button"
-          />
+          {isListening ? (
+            <>
+              <GaugeChart
+                id="accuracy"
+                nrOfLevels={35}
+                percent={centsOffToPercentage(note?.centsOff)}
+                animate={false}
+                marginInPercent={0.01}
+                hideText
+              />
+              {note && (
+                <>
+                  <h1>{`${note?.name}${note?.octave}`}</h1>
+                  <h1>{`${note?.centsOff}`}</h1>
+                  <h1>{`${note?.frequency}`}</h1>
+                </>
+              )}
+              <CallToAction
+                type="red_big"
+                text="Ferma"
+                onClick={stopTuner}
+                mode="button"
+              />
+            </>
+          ) : (
+            <>
+              <CallToAction
+                type="primary_big"
+                text="Accorda"
+                onClick={startTuner}
+                mode="button"
+              />
+            </>
+          )}
         </div>
       )
     default:

@@ -44,7 +44,12 @@ export const logo = style({
 })
 
 export const box = style({
-  padding: "5rem",
+  padding: "2rem",
+  height: "500px",
+  width: "500px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   borderRadius: theme.borderRadius,
   backgroundColor: theme.colors.darkGrey,
 })
