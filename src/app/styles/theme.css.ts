@@ -14,7 +14,7 @@ export const theme = createGlobalTheme(":root", {
     monospace: "Roboto Mono, monospace",
   },
   colors: {
-    background: "#0C0C0C",
+    background: "#25272a",
     lightBackground: "#131313",
     primary: "#00E3A9",
     blue: "#56A1FF",
@@ -42,7 +42,17 @@ export const theme = createGlobalTheme(":root", {
     medium: "1.75rem",
     large: "2.5rem",
   },
-  borderRadius: "24px",
+  borderRadius: {
+    small: "20px",
+    medium: "24px",
+    large: "32px",
+  },
+  gradient: {
+    background:
+      "linear-gradient( 180deg, rgba(62, 67, 76, 1) 0%, rgba(30, 32, 36, 1) 100% )",
+    inner:
+      "linear-gradient( 180deg, rgba(49, 56, 61, 1) 0%, rgba(24, 25, 29, 1) 100% )",
+  },
   transition: "all 0.25s cubic-bezier(0.645,0.045,0.355,1)",
-  boxShadow: "rgb(0, 0, 0) 0px 15px 29px -15px",
+  boxShadow: "2vw 2vw 8vw black",
 })

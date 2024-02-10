@@ -4,7 +4,7 @@ import { theme } from "../../styles/theme.css"
 const base = style({
   fontFamily: theme.fonts.monospace,
   fontWeight: theme.fontWeight.regular,
-  borderRadius: theme.borderRadius,
+  borderRadius: theme.borderRadius.medium,
   transition: theme.transition,
   cursor: "pointer",
   backgroundColor: "transparent",

@@ -26,7 +26,7 @@ const autocorrelationWithShiftingLag = (samples: Float32Array) => {
 
   rms = Math.sqrt(rms / samples.length)
 
-  if (rms < 0.08) {
+  if (rms < 0.05) {
     return []
   }
   return autocorrelation

@@ -12,6 +12,7 @@ import {
   getNoteFromFrequency,
   Note,
 } from "./libs/pitchDetector"
+import { centsOffToPercentage, getColorsArray } from "./utils"
 
 type ITuner = { instrument: Instrument }
 
@@ -42,6 +43,7 @@ export function Tuner(props: ITuner) {
       source.disconnect(analyser)
     }
     setListening(false)
+    setNote(undefined)
   }
 
   const getPitch = () => {
@@ -69,47 +71,42 @@ export function Tuner(props: ITuner) {
     return () => clearInterval(audioSample)
   }, [])
 
-  const centsOffToPercentage = (cents: number | undefined) =>
-    cents ? 0.5 + cents / 100 : 0.5
-
   switch (props.instrument) {
     case "guitar":
       return (
-        <div>
-          {isListening ? (
+        <div className={styles.container}>
+          <GaugeChart
+            id="accuracy"
+            nrOfLevels={31}
+            percent={centsOffToPercentage(note?.centsOff)}
+            animate={false}
+            marginInPercent={0.05}
+            hideText
+            needleColor="#161719"
+            needleBaseColor="#1f2428"
+            colors={getColorsArray()}
+          />
+          {note && (
             <>
-              <GaugeChart
-                id="accuracy"
-                nrOfLevels={35}
-                percent={centsOffToPercentage(note?.centsOff)}
-                animate={false}
-                marginInPercent={0.01}
-                hideText
-              />
-              {note && (
-                <>
-                  <h1>{`${note?.name}${note?.octave}`}</h1>
-                  <h1>{`${note?.centsOff}`}</h1>
-                  <h1>{`${note?.frequency}`}</h1>
-                </>
-              )}
-              <CallToAction
-                type="red_big"
-                text="Ferma"
-                onClick={stopTuner}
-                mode="button"
-              />
-            </>
-          ) : (
-            <>
-              <CallToAction
-                type="primary_big"
-                text="Accorda"
-                onClick={startTuner}
-                mode="button"
-              />
+              <h1>{`${note?.name}${note?.octave}`}</h1>
+              <h1>{`${note?.centsOff}`}</h1>
+              <h1>{`${note?.frequency}`}</h1>
             </>
           )}
+          <div className={styles.controls}>
+            <CallToAction
+              type="primary_big"
+              text="Accorda"
+              onClick={startTuner}
+              mode="button"
+            />
+            <CallToAction
+              type="red_big"
+              text="Ferma"
+              onClick={stopTuner}
+              mode="button"
+            />
+          </div>
         </div>
       )
     default:

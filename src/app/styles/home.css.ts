@@ -45,11 +45,22 @@ export const logo = style({
 
 export const box = style({
   padding: "2rem",
-  height: "500px",
+  height: "600px",
   width: "500px",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  borderRadius: theme.borderRadius,
-  backgroundColor: theme.colors.darkGrey,
+  position: "relative",
+  borderRadius: theme.borderRadius.medium,
+  boxShadow: theme.boxShadow,
+  background: theme.gradient.background,
+  "::before": {
+    content: "",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    borderRadius: theme.borderRadius.small,
+    transform: "scale(0.98, 0.98)",
+    background: theme.gradient.inner,
+  },
 })
