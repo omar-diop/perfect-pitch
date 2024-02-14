@@ -1,6 +1,6 @@
 "use client"
 
-import { CallToAction } from "../CallToAction"
+import { RecordButton } from "../RecordButton"
 import { useState, useEffect } from "react"
 import GaugeChart from "react-gauge-chart"
 import * as styles from "./tuner.css"
@@ -89,18 +89,7 @@ export function Tuner(props: ITuner) {
           />
           <NoteIndicator note={note} />
           <div className={styles.controls}>
-            <CallToAction
-              type="primary_big"
-              text="Accorda"
-              onClick={startTuner}
-              mode="button"
-            />
-            <CallToAction
-              type="red_big"
-              text="Ferma"
-              onClick={stopTuner}
-              mode="button"
-            />
+            <RecordButton pressed={isListening} onClick={startTuner} />
           </div>
         </div>
       )

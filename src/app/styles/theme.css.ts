@@ -53,6 +53,9 @@ export const theme = createGlobalTheme(":root", {
     inner:
       "linear-gradient( 180deg, rgba(49, 56, 61, 1) 0%, rgba(24, 25, 29, 1) 100% )",
   },
-  transition: "all 0.25s cubic-bezier(0.645,0.045,0.355,1)",
-  boxShadow: "2vw 2vw 8vw black",
+  transition: "all 0.20s cubic-bezier(0.645,0.045,0.355,1)",
+  boxShadow: {
+    containers: "2vw 2vw 8vw black",
+    buttons: "0.2vw 0.2vw 0.5vw #16191b, -0.2vw -0.2vw 0.5vw #363e44;",
+  },
 })

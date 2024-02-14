@@ -52,7 +52,7 @@ export const box = style({
   alignItems: "center",
   position: "relative",
   borderRadius: theme.borderRadius.medium,
-  boxShadow: theme.boxShadow,
+  boxShadow: theme.boxShadow.containers,
   background: theme.gradient.background,
   "::before": {
     content: "",
