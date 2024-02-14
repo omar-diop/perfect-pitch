@@ -1,11 +1,38 @@
-const NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+export type Note =
+  | "C"
+  | "C#"
+  | "D"
+  | "D#"
+  | "E"
+  | "F"
+  | "F#"
+  | "G"
+  | "G#"
+  | "A"
+  | "A#"
+  | "B"
 
-export type Note = {
-  name: string
+export type DetectedNote = {
+  name: Note
   octave: number
   centsOff: number
   frequency: number
 }
+
+export const NOTES: Note[] = [
+  "C",
+  "C#",
+  "D",
+  "D#",
+  "E",
+  "F",
+  "F#",
+  "G",
+  "G#",
+  "A",
+  "A#",
+  "B",
+]
 
 const rxx = (lag: number, N: number, samples: Float32Array) => {
   var sum = 0
@@ -68,7 +95,7 @@ const getFrequency = (correlatedValues: number[], sampleRate: number) => {
 
 //Math source: https://newt.phys.unsw.edu.au/jw/notes.html
 
-const getNoteFromFrequency = (frequency: number): Note => {
+const getNoteFromFrequency = (frequency: number): DetectedNote => {
   const midiNum = getMidiNumberFromPitch(frequency)
   return {
     name: NOTES[midiNum % 12],

@@ -10,9 +10,10 @@ import {
   getAutocorrelatedValues,
   getFrequency,
   getNoteFromFrequency,
-  Note,
+  DetectedNote,
 } from "./libs/pitchDetector"
 import { centsOffToPercentage, getColorsArray } from "./utils"
+import { NoteIndicator } from "../NoteIndicator"
 
 type ITuner = { instrument: Instrument }
 
@@ -24,7 +25,7 @@ const analyser = BrowserAudio.getAnalyser()
 
 export function Tuner(props: ITuner) {
   const [source, setSource] = useState<MediaStreamAudioSourceNode>()
-  const [note, setNote] = useState<Note | undefined>()
+  const [note, setNote] = useState<DetectedNote | undefined>()
   const [isListening, setListening] = useState(false)
 
   const startTuner = async () => {
@@ -81,18 +82,12 @@ export function Tuner(props: ITuner) {
             percent={centsOffToPercentage(note?.centsOff)}
             animate={false}
             marginInPercent={0.05}
-            hideText
             needleColor="#161719"
             needleBaseColor="#1f2428"
             colors={getColorsArray()}
+            hideText
           />
-          {note && (
-            <>
-              <h1>{`${note?.name}${note?.octave}`}</h1>
-              <h1>{`${note?.centsOff}`}</h1>
-              <h1>{`${note?.frequency}`}</h1>
-            </>
-          )}
+          <NoteIndicator note={note} />
           <div className={styles.controls}>
             <CallToAction
               type="primary_big"
