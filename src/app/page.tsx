@@ -1,6 +1,6 @@
-import Image from "next/image"
 import * as styles from "./styles/home.css"
 import { Tuner } from "./components/Tuner"
+import { Footer } from "./components/Footer"
 
 export default function Home() {
   return (
@@ -17,15 +17,12 @@ export default function Home() {
           </a>
         </div>
       </div>
-
       <div className={styles.container}>
         <div className={styles.box}>
           <Tuner instrument="guitar" />
         </div>
       </div>
-      <div className={styles.footer}>
-        <p>Footer</p>
-      </div>
+      <Footer />
     </main>
   )
 }

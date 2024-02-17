@@ -19,7 +19,7 @@ export const theme = createGlobalTheme(":root", {
     primary: "#00E3A9",
     blue: "#56A1FF",
     red: "#FF703B",
-    grey: "rgba(169,169,169,0.4)",
+    grey: "rgba(169,169,169,0.7)",
     darkGrey: "#262626",
     text: {
       normal: "#ffffff",
