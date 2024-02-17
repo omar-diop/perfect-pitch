@@ -1,5 +1,3 @@
-"use client"
-
 import { DetectedNote } from "../Tuner/libs/pitchDetector"
 import * as styles from "./noteIndicator.css"
 

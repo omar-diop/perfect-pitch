@@ -20,8 +20,11 @@ type ITuner = { instrument: Instrument }
 type Instrument = "guitar"
 
 const buffer = new Float32Array(FFT_SIZE)
-const audioContext = BrowserAudio.getAudioContext()
-const analyser = BrowserAudio.getAnalyser()
+const browserAudio = new BrowserAudio(
+  typeof window !== "undefined" ? window : undefined
+)
+const audioContext = browserAudio.getAudioContext()
+const analyser = browserAudio.getAnalyser()
 
 export function Tuner(props: ITuner) {
   const [source, setSource] = useState<MediaStreamAudioSourceNode>()
@@ -29,7 +32,8 @@ export function Tuner(props: ITuner) {
   const [isListening, setListening] = useState(false)
 
   const startTuner = async () => {
-    const microphone = await BrowserAudio.getMicStream()
+    if (!audioContext) return
+    const microphone = await browserAudio.getMicStream()
 
     if (audioContext.state === "suspended") {
       await audioContext.resume()
@@ -40,14 +44,17 @@ export function Tuner(props: ITuner) {
   }
 
   const stopTuner = async () => {
-    if (source) {
+    if (source && analyser) {
       source.disconnect(analyser)
     }
     setListening(false)
     setNote(undefined)
+    setSource(undefined)
   }
 
   const getPitch = () => {
+    if (!analyser || !audioContext) return
+    console.log("pitchhh")
     analyser.getFloatTimeDomainData(buffer)
     const correlatedValues = getAutocorrelatedValues(buffer)
     const frequency = getFrequency(correlatedValues, audioContext.sampleRate)
@@ -55,22 +62,17 @@ export function Tuner(props: ITuner) {
     if (frequency > -1) {
       const note = getNoteFromFrequency(frequency)
       setNote(note)
-    } else {
-      //TODO unset note after 1 sec
     }
   }
 
   useEffect(() => {
-    if (source != null) {
+    let audioSample: NodeJS.Timeout
+    if (source != null && analyser) {
       source.connect(analyser)
+      audioSample = setInterval(getPitch, 1)
     }
-  }, [source])
-
-  useEffect(() => {
-    const audioSample = setInterval(getPitch, 1)
-
     return () => clearInterval(audioSample)
-  }, [])
+  }, [source])
 
   switch (props.instrument) {
     case "guitar":

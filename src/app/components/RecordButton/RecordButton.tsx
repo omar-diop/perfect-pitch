@@ -1,5 +1,3 @@
-"use client"
-
 import * as styles from "./recordButton.css"
 import { IoMusicalNotes } from "react-icons/io5"
 

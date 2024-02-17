@@ -13,6 +13,7 @@ export default function Home() {
           width={200}
           height={100}
           style={{ objectFit: "contain" }}
+          priority
         />
       </div>
       <div className={styles.container}>
