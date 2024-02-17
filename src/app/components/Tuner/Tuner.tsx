@@ -5,7 +5,7 @@ import { useState, useEffect } from "react"
 import GaugeChart from "react-gauge-chart"
 import * as styles from "./tuner.css"
 
-import BrowserAudio, { FFT_SIZE } from "./libs/browserAudio"
+import BrowserAudio from "./libs/browserAudio"
 import {
   getAutocorrelatedValues,
   getFrequency,
@@ -19,10 +19,11 @@ type ITuner = { instrument: Instrument }
 
 type Instrument = "guitar"
 
-const buffer = new Float32Array(FFT_SIZE)
 const browserAudio = new BrowserAudio(
   typeof window !== "undefined" ? window : undefined
 )
+const buffer = new Float32Array(browserAudio.getFftSize())
+
 const audioContext = browserAudio.getAudioContext()
 const analyser = browserAudio.getAnalyser()
 
@@ -54,7 +55,6 @@ export function Tuner(props: ITuner) {
 
   const getPitch = () => {
     if (!analyser || !audioContext) return
-    console.log("pitchhh")
     analyser.getFloatTimeDomainData(buffer)
     const correlatedValues = getAutocorrelatedValues(buffer)
     const frequency = getFrequency(correlatedValues, audioContext.sampleRate)

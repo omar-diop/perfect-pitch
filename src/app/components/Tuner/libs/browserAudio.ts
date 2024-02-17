@@ -1,8 +1,9 @@
-export const FFT_SIZE = 2048
+const FFT_SIZE = 2048
 
 class BrowserAudio {
   audioContext: AudioContext | null
   analyser: AnalyserNode | null
+  fftSize: number
 
   constructor(window: undefined | (Window & typeof globalThis)) {
     if (typeof window !== "undefined") {
@@ -15,6 +16,7 @@ class BrowserAudio {
       this.audioContext = null
       this.analyser = null
     }
+    this.fftSize = FFT_SIZE
   }
 
   getMicStream() {
@@ -33,6 +35,10 @@ class BrowserAudio {
 
   getAnalyser() {
     return this.analyser
+  }
+
+  getFftSize() {
+    return this.fftSize
   }
 }
 
