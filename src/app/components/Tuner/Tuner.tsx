@@ -81,7 +81,7 @@ export function Tuner(props: ITuner) {
             nrOfLevels={31}
             percent={centsOffToPercentage(note?.centsOff)}
             animate={false}
-            marginInPercent={0.05}
+            marginInPercent={0.02}
             needleColor="#161719"
             needleBaseColor="#1f2428"
             colors={getColorsArray()}
@@ -89,7 +89,10 @@ export function Tuner(props: ITuner) {
           />
           <NoteIndicator note={note} />
           <div className={styles.controls}>
-            <RecordButton pressed={isListening} onClick={startTuner} />
+            <RecordButton
+              pressed={isListening}
+              onClick={isListening ? stopTuner : startTuner}
+            />
           </div>
         </div>
       )

@@ -46,7 +46,7 @@ export const logo = style({
 export const box = style({
   padding: "2rem",
   height: "600px",
-  width: "500px",
+  width: "400px",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -62,5 +62,11 @@ export const box = style({
     borderRadius: theme.borderRadius.small,
     transform: "scale(0.98, 0.98)",
     background: theme.gradient.inner,
+  },
+  "@media": {
+    "screen and (max-width:576px)": {
+      width: "100%",
+      height: "550px",
+    },
   },
 })

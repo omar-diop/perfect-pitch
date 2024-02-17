@@ -30,7 +30,7 @@ export const button = styleVariants({
   pressed: [
     buttonBase,
     {
-      background: "linear-gradient( 135deg, #0cd685 0%, #13a673 100% )",
+      background: "linear-gradient( 145deg, #0cd685 0%, #13a673 100% )",
     },
   ],
   idle: [
@@ -46,7 +46,7 @@ export const inner = styleVariants({
   pressed: [
     innerBase,
     {
-      background: "linear-gradient( 135deg, #09b387 0%, #00E3A9 100% )",
+      background: "linear-gradient( 145deg, #09b387 0%, #00E3A9 100% )",
       boxShadow: "inset 0.75vw 0.75vw 0.75vw rgba(0, 0, 0, 0.2)",
       color: theme.colors.text.normal,
     },
@@ -56,7 +56,7 @@ export const inner = styleVariants({
     {
       boxShadow: "inset 0 0 0.3vw rgba(255, 255, 255, 0.1);",
       background:
-        "linear-gradient( 135deg, rgba(40, 43, 48, 1) 0%, rgba(29, 32, 35, 1) 100% );",
+        "linear-gradient( 145deg, rgba(40, 43, 48, 1) 0%, rgba(29, 32, 35, 1) 100% );",
       color: theme.colors.text.dimmed,
     },
   ],
