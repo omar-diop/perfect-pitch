@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Perfect Pitch
 
-## Getting Started
+This open-source project, created out of curiosity, aims to provide a web-based tuner tool, allowing users to tune their instruments from their web browsers.
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Perfect Pitch leverages TypeScript, React, and Next.js to create an intuitive and user-friendly interface for tuning instruments.
+The tuner utilizes algorithms such as autocorrelation to accurately detect and display the pitch of the detected note.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![Perfect Pitch](/misc/readme-banner.png)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Real-time audio input from the microphone
+- Visual display of detected pitch and tuning accuracy
+- Support for standard guitar tuning (EADGBE) and alternate tunings
+- Support for tuning all instruments with octave visualization
+- Responsive design for seamless usage on desktop and mobile devices
 
-## Learn More
+## How to Use
 
-To learn more about Next.js, take a look at the following resources:
+To use Perfect Pitch:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone the repository to your local machine.
+2. Navigate to the project directory and install dependencies using `npm install`.
+3. Start the development server with `npm run dev`.
+4. Access the tuner tool in your web browser at `http://localhost:3000`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Contributing
 
-## Deploy on Vercel
+Contributions to the Perfect Pitch project are welcome! If you'd like to contribute, please follow these steps:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Fork the repository to your GitHub account.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them with descriptive messages.
+4. Push your changes to your forked repository.
+5. Open a pull request to the main repository, detailing the changes made and any relevant information.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+
+Perfect Pitch is licensed under the [**MIT** License](/LICENSE.md) by Omar Diop.
