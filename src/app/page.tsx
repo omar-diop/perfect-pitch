@@ -1,21 +1,19 @@
 import * as styles from "./styles/home.css"
 import { Tuner } from "./components/Tuner"
 import { Footer } from "./components/Footer"
+import Image from "next/image"
 
 export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.header}>
-        <p>Accordatore Online</p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By Omar
-          </a>
-        </div>
+        <Image
+          src="/images/logo.png"
+          alt="Perfect Pitch, Logo"
+          width={200}
+          height={100}
+          style={{ objectFit: "contain" }}
+        />
       </div>
       <div className={styles.container}>
         <div className={styles.box}>

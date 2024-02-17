@@ -23,13 +23,19 @@ export const header = style({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
+  "@media": {
+    "screen and (max-width:576px)": {
+      justifyContent: "center",
+    },
+  },
 })
 
 export const container = style({
-  minHeight: "80vh",
+  minHeight: "70vh",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  marginBottom: theme.space.extraLarge,
 })
 
 export const footer = style({
