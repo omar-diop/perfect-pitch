@@ -34,62 +34,60 @@ export const NOTES: Note[] = [
   "B",
 ]
 
-const rxx = (lag: number, N: number, samples: Float32Array) => {
+const rxx = (lag: number, N: number, audioSignal: Float32Array) => {
   var sum = 0
   for (var n = 0; n <= N - lag - 1; n++) {
-    sum += samples[n] * samples[n + lag]
+    sum += audioSignal[n] * audioSignal[n + lag]
   }
   return sum
 }
 
-const autocorrelationWithShiftingLag = (samples: Float32Array) => {
+const autocorrelationWithLag = (audioSignal: Float32Array) => {
   let autocorrelation = []
   let rms = 0 //https://en.wikipedia.org/wiki/Root_mean_square
 
-  for (var lag = 0; lag < samples.length; lag++) {
-    autocorrelation[lag] = rxx(lag, samples.length, samples)
+  for (var lag = 0; lag < audioSignal.length; lag++) {
+    autocorrelation[lag] = rxx(lag, audioSignal.length, audioSignal)
     rms += autocorrelation[lag] * autocorrelation[lag]
   }
 
-  rms = Math.sqrt(rms / samples.length)
+  rms = Math.sqrt(rms / audioSignal.length)
 
   if (rms < 0.05) {
     return []
   }
   return autocorrelation
 }
-const maxAbsoluteScaling = (data: number[]) => {
-  var xMax = Math.abs(Math.max(...data))
-  return data.map((x) => x / xMax)
+
+const normalize = (data: number[]) => {
+  var maxAbsX = Math.abs(Math.max(...data))
+  return data.map((x) => x / maxAbsX)
 }
 
-//Math source: https://en.wikipedia.org/wiki/Autocorrelation
 const getAutocorrelatedValues = (audioSignal: Float32Array) => {
-  return maxAbsoluteScaling(autocorrelationWithShiftingLag(audioSignal))
+  return normalize(autocorrelationWithLag(audioSignal))
 }
 
 const getFrequency = (correlatedValues: number[], sampleRate: number) => {
-  var N = correlatedValues.length
-  var valOfLargestPeak = 0
-  var indexOfLargestPeak = -1
+  const N = correlatedValues.length
+  let largestPeakValue = 0
+  let largestPeakIndex = -1
 
-  for (var index = 1; index < N; index++) {
-    var valL = correlatedValues[index - 1]
-    var valC = correlatedValues[index]
-    var valR = correlatedValues[index + 1]
+  for (let index = 1; index < N; index++) {
+    const prev = correlatedValues[index - 1]
+    const current = correlatedValues[index]
+    const next = correlatedValues[index + 1]
 
-    var bIsPeak = valL < valC && valR < valC
-    if (bIsPeak) {
-      if (valC > valOfLargestPeak) {
-        valOfLargestPeak = valC
-        indexOfLargestPeak = index
+    const isPeak = prev < current && next < current
+    if (isPeak) {
+      if (current > largestPeakValue) {
+        largestPeakValue = current
+        largestPeakIndex = index
       }
     }
   }
 
-  var distanceToNextLargestPeak = indexOfLargestPeak - 0
-
-  var fundamentalFrequency = sampleRate / distanceToNextLargestPeak
+  const fundamentalFrequency = sampleRate / largestPeakIndex
   return fundamentalFrequency
 }
 
