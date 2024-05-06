@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import "./styles/globals.css"
 import * as style from "./styles/globals.css"
+import { TagManager } from "./components/TagManager"
 
 export const metadata: Metadata = {
   title: "Accordatore Online",
@@ -15,6 +16,7 @@ export default function RootLayout({
   return (
     <html lang="it">
       <body>
+        <TagManager />
         <div id="mainContainer" className={style.container}>
           {children}
         </div>
